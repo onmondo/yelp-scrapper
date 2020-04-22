@@ -12,6 +12,8 @@
 # Happy Coding!
 
 service: yelp-scrapper
+plugins:
+  - serverless-offline
 # app and org for use with dashboard.serverless.com
 #app: your-app-name
 #org: your-org-name
@@ -25,6 +27,7 @@ provider:
   runtime: nodejs12.x
   stage: dev
   region: ap-southeast-2
+  profile: serverless-admin
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
@@ -60,10 +63,10 @@ functions:
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
-#    events:
-#      - http:
-#          path: users/create
-#          method: get
+    events:
+      - http:
+          path: message/{name}
+          method: get
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)
@@ -92,7 +95,10 @@ functions:
 #          conditions:
 #            host: example.com
 #            path: /hello
-
+  cron:
+    handler: src/services/Cron/index.cron
+    events:
+      - schedule: rate(1 minute)   
 #    Define function environment variables here
 #    environment:
 #      variable2: value2
