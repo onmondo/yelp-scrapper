@@ -2,7 +2,7 @@
 const catchAsyncError = require('../../utils/catchAsyncError');
 const standardResponse = require('../../utils/standardResponse');
 
-module.exports.hello = catchAsyncError(async (event, context, callback) => {
+module.exports.hello = catchAsyncError(async (event, _context, callback) => {
   const {name} = event.pathParameters;
 
   const response = standardResponse({
